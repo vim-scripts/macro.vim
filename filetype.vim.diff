@@ -1,0 +1,22 @@
+--- filetype.vim.org	Tue Dec  2 10:51:10 2003
++++ filetype.vim	Tue Dec  2 10:47:49 2003
+@@ -114,6 +114,10 @@
+ 	\ endif
+ 
+ " Assembly (all kinds)
++
++" Macro (VAX)
++au BufNewFile,BufRead *.mar,    		setf macro
++
+ " *.lst is not pure assembly, it has two extra columns (address, byte codes)
+ au BufNewFile,BufRead *.asm,*.[sS],*.[aA],*.mac,*.lst	call <SID>FTasm()
+ 
+@@ -148,6 +152,8 @@
+ 	\" ".getline(5)." "
+   if head =~ '\sasmsyntax=\S\+\s'
+     let b:asmsyntax = substitute(head, '.*\sasmsyntax=\(\S\+\)\s.*','\1', "")
++  elseif ((head =~? '\.title') || (head =~? '\.ident') || (head =~? '\.macro') || (head =~? '\.subtitle') || (head =~? '\.library'))
++    let b:asmsyntax = "macro"
+   endif
+ endfun
+ 
